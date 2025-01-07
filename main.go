@@ -45,7 +45,9 @@ func main() {
 		fmt.Println("6. Cari pertanyaan berdasarkan tag")
 		fmt.Println("7. Lihat topik terurut berdasarkan jumlah pertanyaan")
 		fmt.Println("8. Hitung total tanggapan")
-		fmt.Println("9. Keluar")
+		fmt.Println("9. Update Pasien")
+		fmt.Println("10. Delete Pasien")
+		fmt.Println("11. Keluar")
 
 		var input int
 		fmt.Print("Masukkan pilihan: ")
@@ -100,6 +102,22 @@ func main() {
 			totalTanggapan := hitungTanggapan(pertanyaanArr[:pertanyaanCount], 0)
 			fmt.Printf("Total tanggapan: %d\n", totalTanggapan)
 		case 9:
+			var id int
+			var nama string
+			var usia int
+			fmt.Print("Masukkan ID Pasien: ")
+			fmt.Scanln(&id)
+			fmt.Print("Masukkan nama: ")
+			fmt.Scanln(&nama)
+			fmt.Print("Masukkan usia: ")
+			fmt.Scanln(&usia)
+			updatePasien(id, nama, usia)
+		case 10:
+			var id int
+			fmt.Print("Masukkan ID Pasien: ")
+			fmt.Scanln(&id)
+			deletePasien(id)
+		case 11:
 			fmt.Println("Program selesai. Terima kasih!")
 			return
 		default:
@@ -119,6 +137,28 @@ func daftarPasien(nama string, usia int) Pasien {
 	pasienArr[pasienCount] = pasien
 	pasienCount++
 	return pasien
+}
+
+func updatePasien(id int, nama string, usia int) {
+	for i := 0; i < pasienCount; i++ {
+		if pasienArr[i].ID == id {
+			pasienArr[i].Nama = nama
+			pasienArr[i].Usia = usia
+			break
+		}
+	}
+}
+
+func deletePasien(id int) {
+	for i := 0; i < pasienCount; i++ {
+		if pasienArr[i].ID == id {
+			for j := i; j < pasienCount-1; j++ {
+				pasienArr[j] = pasienArr[j+1]
+			}
+			pasienCount--
+			break
+		}
+	}
 }
 
 // Fungsi untuk mengajukan pertanyaan
